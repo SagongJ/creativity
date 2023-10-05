@@ -1,0 +1,51 @@
+아두이노 코드
+
+int a = 5;
+
+void setup() 
+{
+  pinMode(a, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+  int b = digitalRead(a);
+
+  if (b == LOW) 
+  {
+    Serial.println('1');
+  } 
+
+  else {
+    Serial.println('0');
+  }
+  delay(1000);
+}
+
+프로세싱 코드
+
+import processing.serial.*;
+Serial s;
+int i; 
+void setup()
+{
+  size(400, 400);
+  s = new Serial(this, "COM5", 9600);
+}
+
+void draw()
+{
+  if (s.available() > 0) 
+  {
+    i = s.read(); 
+    if (i == '1') 
+    {
+      background(0, 255, 0); 
+    }
+    if (i == '0') 
+    {
+      background(0); 
+    }
+  }
+}
