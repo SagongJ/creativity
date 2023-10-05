@@ -1,0 +1,34 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial btSerial(2, 3);
+int ledPin = 7;
+int buzzerPin = 4;
+
+void setup() {
+  Serial.begin(9600);
+  btSerial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  if (btSerial.available()) {
+    String receivedMsg = btSerial.readString();
+    if (receivedMsg == "on") {
+      digitalWrite(ledPin, HIGH);
+    } else if (receivedMsg == "off") {
+      digitalWrite(ledPin, LOW);
+    } else {
+      int note = receivedMsg.toInt();
+      playTone(note);
+    }
+  }
+}
+
+void playTone(int note) {
+  int tones[] = {262, 294, 330, 349, 392, 440, 494, 523};
+  int duration = 500; // 음 길이 (ms)
+  tone(buzzerPin, tones[note - 1], duration);
+  delay(duration + 50); 
+  noTone(buzzerPin);
+}
