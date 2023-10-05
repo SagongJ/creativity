@@ -1,0 +1,19 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial btSerial(2, 3); 
+
+void setup() {
+  Serial.begin(9600);
+  btSerial.begin(9600);
+}
+
+void loop() {
+  if (btSerial.available()) {
+    char receivedChar = btSerial.read();
+    if (receivedChar == '0') {
+      Serial.println("Received 0");
+    } else if (receivedChar == '1') {
+      Serial.println("Received 1");
+    }
+  }
+}
